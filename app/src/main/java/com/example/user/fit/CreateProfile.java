@@ -38,6 +38,8 @@ public class CreateProfile extends AppCompatActivity {
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
 
 
+
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +49,7 @@ public class CreateProfile extends AppCompatActivity {
                 weight.setText(null);
                 height.setText(null);
                 password.setText(null);
-                confirmPassword.setText(null);
+                //confirmPassword.setText(null);
             }
         });
 
