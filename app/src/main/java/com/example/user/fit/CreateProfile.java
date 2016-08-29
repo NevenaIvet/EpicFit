@@ -49,7 +49,7 @@ public class CreateProfile extends AppCompatActivity {
                 weight.setText(null);
                 height.setText(null);
                 password.setText(null);
-                //confirmPassword.setText(null);
+                confirmPassword.setText(null);
             }
         });
 
