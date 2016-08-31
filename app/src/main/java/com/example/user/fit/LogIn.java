@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -178,14 +180,14 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+        // TODO Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
+        // TODO Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -210,13 +212,33 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if(matcher.matches()){
+            return true;
+        }
+        return false;
     }
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+    private boolean isPasswordValid(String pass) {
+        boolean hasNumber= false;
+        boolean hasLetter=false;
+        if(pass.length()>=5){
+            for(int i = 0 ; i<=pass.length()-1;i++){
+                if(pass.charAt(i)>=48&&pass.charAt(i)<= 57){
+                    hasNumber=true;
+
+                }
+                if((pass.charAt(i)>=97&&pass.charAt(i)<= 122)||(pass.charAt(i)>=65 &&pass.charAt(i)<=90 )){
+                    hasLetter=true;
+                }
+            }
+            if(hasNumber&&hasLetter){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
