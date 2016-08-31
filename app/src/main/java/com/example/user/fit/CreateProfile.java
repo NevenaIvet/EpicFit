@@ -88,8 +88,11 @@ public class CreateProfile extends AppCompatActivity {
                 Profile p = new Profile(email.getText().toString(),password.getText().toString());
                 Manager.getInstance().registerUser(p);
                 Intent intent = new Intent(CreateProfile.this,LogIn.class);
-                intent.putExtra("profile",p);
+                intent.putExtra("email",p.getEmail());
+                intent.putExtra("password",p.getPassword());
+                //intent.putExtra("profile",p); //za momenta ne
                 startActivity(intent);
+                finish();
             }
         });
 

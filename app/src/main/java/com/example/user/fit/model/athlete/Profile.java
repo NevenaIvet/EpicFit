@@ -28,7 +28,7 @@ public class Profile implements Serializable {
 	//remove this
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return this.password;
+		return password;
 	}
 
 	public Profile(String email, String password) {
