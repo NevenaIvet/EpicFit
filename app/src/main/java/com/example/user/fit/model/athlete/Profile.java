@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Profile implements Serializable {
-	private String email="";
+	private String email;
 	private String password="";
 	private String username;
 
@@ -17,6 +17,9 @@ public class Profile implements Serializable {
 	}
 
 
+	public String getEmail() {
+		return email;
+	}
 
 	public String getUsername() {
 		return username;
@@ -28,8 +31,8 @@ public class Profile implements Serializable {
 		return this.password;
 	}
 
-	public Profile(String username, String password) {
-		this.username=username;
+	public Profile(String email, String password) {
+		this.email=email;
 		this.password=password;
 	}
 }
