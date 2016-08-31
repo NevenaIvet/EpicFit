@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateProfile" />
-        <activity android:name=".Profile" />
+        <activity android:name=".ProfileActivity" />
         <activity
             android:name=".LogIn"
             android:label="@string/title_activity_log_in"></activity>

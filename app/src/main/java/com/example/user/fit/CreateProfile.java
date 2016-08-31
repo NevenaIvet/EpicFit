@@ -4,10 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+
+import com.example.user.fit.model.Manager;
+import com.example.user.fit.model.athlete.InvalidUsernameException;
+import com.example.user.fit.model.athlete.Profile;
+import com.example.user.fit.model.athlete.UnsecurePasswordException;
+
+import java.io.Serializable;
 
 public class CreateProfile extends AppCompatActivity {
 
@@ -20,7 +27,8 @@ public class CreateProfile extends AppCompatActivity {
     private EditText height;
     private EditText password;
     private EditText confirmPassword;
-//neshto
+    private Profile p;
+    public static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +64,32 @@ public class CreateProfile extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(name.isEnabled() && username.isEnabled() && email.isEnabled() && weight.isEnabled() && height.isEnabled() && password.isEnabled() && confirmPassword.isEnabled()){
-                    //need verification for email
-                    //need verificatio for password
+                if(!(name.getText().toString().isEmpty() && username.getText().toString().isEmpty()
+                        && email.getText().toString().isEmpty() && weight.getText().toString().isEmpty() && height.getText().toString().isEmpty() &&
+                password.getText().toString().isEmpty() && confirmPassword.getText().toString().isEmpty())){
+                    if(password.getText().toString().equals(confirmPassword.getText().toString())) {
+                        String userName = username.getText().toString();
+                        String pass = password.getText().toString();
+                        try {
+                            p = new Profile(userName,pass);
+                        } catch (InvalidUsernameException e) {
 
-                    if(password.equals(confirmPassword)) {
-                        Intent goToProfile = new Intent(CreateProfile.this, Profile.class);
-                        startActivity(goToProfile);
+                        } catch (UnsecurePasswordException e) {
+
+                        }
+                        Manager.getInstance().registerUser(p.getUsername(), p.getPassword());
+                        Intent goToProfile = new Intent(CreateProfile.this, LogIn.class);
+                        goToProfile.putExtra("Profile" , (Serializable) p);
+                        startActivityForResult(goToProfile,REQUEST_CODE);
                     }
+                    else{
+                        confirmPassword.setError("Passwords don't match!");
+                        return;
+                    }
+                }
 
-
+                else{
+                    Toast.makeText(CreateProfile.this, "You have empty fields!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
