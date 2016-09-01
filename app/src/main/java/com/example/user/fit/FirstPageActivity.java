@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class FirstPage extends AppCompatActivity {
+public class FirstPageActivity extends AppCompatActivity {
 
     private Button create;
     private Button login;
@@ -22,7 +22,7 @@ public class FirstPage extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent createProfile = new Intent(FirstPage.this, CreateProfile.class);
+                Intent createProfile = new Intent(FirstPageActivity.this, CreateProfileActivity.class);
                 startActivity(createProfile);
             }
         });
@@ -30,7 +30,7 @@ public class FirstPage extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(FirstPage.this, LogIn.class);
+                Intent login = new Intent(FirstPageActivity.this, LogInActivity.class);
                 startActivity(login);
             }
         });

@@ -16,7 +16,7 @@ import com.example.user.fit.model.athlete.UnsecurePasswordException;
 
 import java.io.Serializable;
 
-public class CreateProfile extends AppCompatActivity {
+public class CreateProfileActivity extends AppCompatActivity {
 
     private Button save;
     private Button cancel;
@@ -78,7 +78,7 @@ public class CreateProfile extends AppCompatActivity {
 
                         }
                         Manager.getInstance().registerUser(p.getUsername(), p.getPassword());
-                        Intent goToProfile = new Intent(CreateProfile.this, LogIn.class);
+                        Intent goToProfile = new Intent(CreateProfileActivity.this, LogInActivity.class);
                         goToProfile.putExtra("Profile" , (Serializable) p);
                         startActivityForResult(goToProfile,REQUEST_CODE);
                     }
@@ -89,7 +89,7 @@ public class CreateProfile extends AppCompatActivity {
                 }
 
                 else{
-                    Toast.makeText(CreateProfile.this, "You have empty fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateProfileActivity.this, "You have empty fields!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
