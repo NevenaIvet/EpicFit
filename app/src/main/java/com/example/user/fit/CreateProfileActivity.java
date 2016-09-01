@@ -64,34 +64,46 @@ public class CreateProfileActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(name.getText().toString().isEmpty() && username.getText().toString().isEmpty()
-                        && email.getText().toString().isEmpty() && weight.getText().toString().isEmpty() && height.getText().toString().isEmpty() &&
-                password.getText().toString().isEmpty() && confirmPassword.getText().toString().isEmpty())){
-                    if(password.getText().toString().equals(confirmPassword.getText().toString())) {
-                        String userName = username.getText().toString();
-                        String pass = password.getText().toString();
-                        try {
-                            p = new Profile(userName,pass);
-                        } catch (InvalidUsernameException e) {
 
-                        } catch (UnsecurePasswordException e) {
-
-                        }
-                        Manager.getInstance().registerUser(p.getUsername(), p.getPassword());
-                        Intent goToProfile = new Intent(CreateProfileActivity.this, LogInActivity.class);
-                        goToProfile.putExtra("Profile" , (Serializable) p);
-                        startActivityForResult(goToProfile,REQUEST_CODE);
-                    }
-                    else{
-                        confirmPassword.setError("Passwords don't match!");
-                        return;
-                    }
+                if(name.getText().toString().isEmpty()||username.getText().toString().isEmpty()||weight.getText().toString().isEmpty()||
+                        height.getText().toString().isEmpty()||password.getText().toString().isEmpty()||confirmPassword.getText().toString().isEmpty()||email.getText().toString().isEmpty()){
+                    Toast.makeText(CreateProfileActivity.this,"You have empty fields",Toast.LENGTH_SHORT).show();
+                    return;
                 }
-
-                else{
-                    Toast.makeText(CreateProfileActivity.this, "You have empty fields!", Toast.LENGTH_SHORT).show();
+                if(!password.getText().toString().equals(confirmPassword.getText().toString())){
+                    confirmPassword.setError("Passwords don't match");
+                    return;
                 }
+                if(!email.getText().toString().contains("@")){
+                   email.setError("Not an email");
+                    return;
+
+                }
+                if(!validateMeasures(height.getText().toString())){
+                    height.setError("Enter real number");
+                    return;
+                }
+                if(!validateMeasures(weight.getText().toString())){
+                    weight.setError("No need to lie here");
+                    return;
+                }
+                Profile p = new Profile(email.getText().toString(),password.getText().toString());
+                Manager.getInstance().registerUser(p);
+                Intent intent = new Intent(CreateProfileActivity.this,LogInActivity.class);
+                intent.putExtra("email",p.getEmail());
+                intent.putExtra("password",p.getPassword());
+                //intent.putExtra("profile",p); //za momenta ne
+                startActivity(intent);
+                finish();
             }
         });
+
+    }
+    public boolean validateMeasures(String measure){
+        int measureHelp = Integer.parseInt(measure);
+        if(measureHelp<=0){
+            return false;
+        }
+        return true;
     }
 }

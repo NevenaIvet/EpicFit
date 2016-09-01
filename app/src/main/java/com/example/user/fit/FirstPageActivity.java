@@ -34,5 +34,6 @@ public class FirstPageActivity extends AppCompatActivity {
                 startActivity(login);
             }
         });
+        finish();
     }
 }

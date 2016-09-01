@@ -20,39 +20,36 @@ public class Manager {
     public static Manager getInstance() {
         if(ourInstance==null){
             ourInstance= new Manager();
-            Log.e("Manager","created new manager");
+
         }
-        Log.e("Manager","manager exists");
+
         return ourInstance;
     }
-    public void registerUser(String username, String password){
-        Profile p = null;
-        try {
-            p = new Profile(username, password);
-        } catch (InvalidUsernameException e) {
-            e.printStackTrace();
-        } catch (UnsecurePasswordException e) {
-            e.printStackTrace();
+    public void registerUser(Profile u){
+        if(!u.getEmail().toString().isEmpty()&&u.getEmail().toString()!=null){
+            if(!(users.containsKey(u.getEmail().toString()))){
+                users.put(u.getEmail().toString(), u);
+            }
+
         }
 
-       // if(!users.containsKey(p.getUsername())){
-         users.put(p.getUsername(),p);
-     //}
     }
-    public boolean validateLogin(String username,String password){
-        if(users.containsKey(username)){
-            Log.e("Manager","we have this username");
-            String userName=users.get(username).getUsername();
-            String pass=users.get(username).getPassword();
-            if(userName.equals(username)&&pass.equals(password)){
-                Log.e("Manager","successful login");
-                return true;
-            }
-        }
-        return false;
-    }
+    //TODO validateLogin() is not working
+//    public boolean validateLogin(String username,String password){
+//        if(users.containsKey(username)){
+//            Log.e("Manager","we have this username");
+//            String userName=users.get(username).getUsername();
+//            String pass=users.get(username).getPassword();
+//            if(userName.equals(username)&&pass.equals(password)){
+//                Log.e("Manager","successful login");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     private Manager() {
+
         users=new HashMap<>();
     }
 }
